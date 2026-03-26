@@ -105,7 +105,11 @@ namespace SimpleCalculator
 
         private void Clear_Click(object sender, EventArgs e)
         {
-            
+            firstOperand = 0;
+            currentOperator = "";
+            InputBox.Text = "0";      // 화면을 0으로 초기화
+            OutputBox.Text = "";     // 수식창 비우기
+            isNewInput = true;
         }
 
         private void Delete_Click(object sender, EventArgs e)
