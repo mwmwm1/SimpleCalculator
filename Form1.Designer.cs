@@ -61,6 +61,7 @@
             One.TabIndex = 0;
             One.Text = "1";
             One.UseVisualStyleBackColor = true;
+            One.Click += btnNumber_Click;
             // 
             // Two
             // 
@@ -70,6 +71,7 @@
             Two.TabIndex = 1;
             Two.Text = "2";
             Two.UseVisualStyleBackColor = true;
+            Two.Click += btnNumber_Click;
             // 
             // Three
             // 
@@ -79,6 +81,7 @@
             Three.TabIndex = 2;
             Three.Text = "3";
             Three.UseVisualStyleBackColor = true;
+            Three.Click += btnNumber_Click;
             // 
             // Four
             // 
@@ -88,6 +91,7 @@
             Four.TabIndex = 3;
             Four.Text = "4";
             Four.UseVisualStyleBackColor = true;
+            Four.Click += btnNumber_Click;
             // 
             // Five
             // 
@@ -97,6 +101,7 @@
             Five.TabIndex = 4;
             Five.Text = "5";
             Five.UseVisualStyleBackColor = true;
+            Five.Click += btnNumber_Click;
             // 
             // Six
             // 
@@ -106,6 +111,7 @@
             Six.TabIndex = 5;
             Six.Text = "6";
             Six.UseVisualStyleBackColor = true;
+            Six.Click += btnNumber_Click;
             // 
             // Seven
             // 
@@ -115,6 +121,7 @@
             Seven.TabIndex = 6;
             Seven.Text = "7";
             Seven.UseVisualStyleBackColor = true;
+            Seven.Click += btnNumber_Click;
             // 
             // Eight
             // 
@@ -124,6 +131,7 @@
             Eight.TabIndex = 7;
             Eight.Text = "8";
             Eight.UseVisualStyleBackColor = true;
+            Eight.Click += btnNumber_Click;
             // 
             // Nine
             // 
@@ -133,6 +141,7 @@
             Nine.TabIndex = 8;
             Nine.Text = "9";
             Nine.UseVisualStyleBackColor = true;
+            Nine.Click += btnNumber_Click;
             // 
             // Zero
             // 
@@ -142,6 +151,7 @@
             Zero.TabIndex = 9;
             Zero.Text = "0";
             Zero.UseVisualStyleBackColor = true;
+            Zero.Click += btnNumber_Click;
             // 
             // ClearEntry
             // 
@@ -209,6 +219,7 @@
             Plus.TabIndex = 16;
             Plus.Text = "+";
             Plus.UseVisualStyleBackColor = true;
+            Plus.Click += Plus_Click;
             // 
             // Sign
             // 
@@ -239,6 +250,7 @@
             Equal.TabIndex = 19;
             Equal.Text = "=";
             Equal.UseVisualStyleBackColor = true;
+            Equal.Click += Equal_Click;
             // 
             // OutputBox
             // 
@@ -294,6 +306,7 @@
             Controls.Add(One);
             Name = "Form1";
             Text = "Calculator v1.0";
+            Click += btnNumber_Click;
             ResumeLayout(false);
             PerformLayout();
         }
