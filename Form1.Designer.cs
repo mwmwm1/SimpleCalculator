@@ -189,6 +189,7 @@
             Divide.TabIndex = 13;
             Divide.Text = "÷";
             Divide.UseVisualStyleBackColor = true;
+            Divide.Click += btnOperator_Click;
             // 
             // Multiply
             // 
@@ -199,6 +200,7 @@
             Multiply.TabIndex = 14;
             Multiply.Text = "×";
             Multiply.UseVisualStyleBackColor = true;
+            Multiply.Click += btnOperator_Click;
             // 
             // Minus
             // 
@@ -209,6 +211,7 @@
             Minus.TabIndex = 15;
             Minus.Text = "ㅡ";
             Minus.UseVisualStyleBackColor = true;
+            Minus.Click += btnOperator_Click;
             // 
             // Plus
             // 
@@ -219,7 +222,7 @@
             Plus.TabIndex = 16;
             Plus.Text = "+";
             Plus.UseVisualStyleBackColor = true;
-            Plus.Click += Plus_Click;
+            Plus.Click += btnOperator_Click;
             // 
             // Sign
             // 
