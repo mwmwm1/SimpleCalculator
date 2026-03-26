@@ -1,8 +1,10 @@
+using System.Data;
+
 namespace SimpleCalculator
 {
     public partial class Form1 : Form
     {
-        int firstOperand = 0;       // 첫 번째 숫자 저장
+        double firstOperand = 0;       // 첫 번째 숫자 저장
         string currentOperator = "";  // 표준 연산자 (+, -, *, /) 저장
         bool isNewInput = true;      // 새로운 숫자 입력 여부
 
@@ -23,18 +25,12 @@ namespace SimpleCalculator
                 }
                 else
                 {
-                    InputBox.Text += btn.Text;
+                    // 0만 있을 때 숫자를 누르면 0이 지워지고 새 숫자가 써지도록 처리
+                    if (InputBox.Text == "0") InputBox.Text = btn.Text;
+                    else InputBox.Text += btn.Text;
                 }
 
-                // 수정된 로직: 연산자가 없으면 숫자만, 있으면 수식 전체를 표시
-                if (string.IsNullOrEmpty(currentOperator))
-                {
-                    OutputBox.Text = InputBox.Text;
-                }
-                else
-                {
-                    OutputBox.Text = $"{firstOperand} {currentOperator} {InputBox.Text}";
-                }
+                OutputBox.Text = InputBox.Text;
             }
         }
 
@@ -43,67 +39,40 @@ namespace SimpleCalculator
         {
             if (sender is Button btn)
             {
-                if (int.TryParse(InputBox.Text, out firstOperand))
-                {
-                    // 버튼의 특수 기호를 표준 기호로 변환하여 저장
-                    string opText = btn.Text;
+                string op = btn.Text;
+                if (op == "÷") op = "/";
+                else if (op == "×") op = "*";
+                else if (op == "ㅡ") op = "-";
 
-                    if (opText == "÷") currentOperator = "/";
-                    else if (opText == "×") currentOperator = "*";
-                    else if (opText == "ㅡ") currentOperator = "-";
-                    else currentOperator = opText; // "+" 등은 그대로
-
-                    // OutputBox에는 변환된 표준 기호를 표시
-                    OutputBox.Text = $"{firstOperand} {currentOperator}";
-
-                    isNewInput = true;
-                }
+                InputBox.Text += " " + op + " ";
+                OutputBox.Text = InputBox.Text;
+                isNewInput = false;
             }
         }
 
         // Equal 버튼에 연결
         private void Equal_Click(object sender, EventArgs e)
         {
-            int secondOperand = 0;
-            int result = 0;
-
-            if (int.TryParse(InputBox.Text, out secondOperand))
+            try
             {
-                // 계산 수행
-                switch (currentOperator)
-                {
-                    case "+":
-                        result = firstOperand + secondOperand;
-                        break;
-                    case "-":
-                        result = firstOperand - secondOperand;
-                        break;
-                    case "*":
-                        result = firstOperand * secondOperand;
-                        break;
-                    case "/":
-                        if (secondOperand != 0)//0으로 나누는 경우
-                        {
-                            result = firstOperand / secondOperand;
-                        }
-                        else
-                        {
-                            MessageBox.Show("0으로 나눌 수 없습니다!");
-                            return; // 계산 중단
-                        }
-                        break;
-                    default:
-                        return; // 연산자가 선택되지 않은 경우
-                }
+                string expression = InputBox.Text;
+                expression = System.Text.RegularExpressions.Regex.Replace(expression, @"(\d)\s*\(", "$1*(");
+                expression = System.Text.RegularExpressions.Regex.Replace(expression, @"\)\s*(\d)", ")*$1");
 
-                // OutputBox에 전체 수식과 결과 표시 
-                OutputBox.Text = $"{firstOperand} {currentOperator} {secondOperand} = {result}";
+                DataTable table = new DataTable();
+                var result = table.Compute(expression, "");
+                double finalValue = Convert.ToDouble(result);
 
-                // InputBox에 최종 결과 표시
-                InputBox.Text = result.ToString();
+                finalValue = Math.Round(finalValue, 6);
+                string printResult = finalValue.ToString("G");
 
-                // 상태 초기화
+                OutputBox.Text = $"{InputBox.Text} = {printResult}";
+                InputBox.Text = printResult;
                 isNewInput = true;
+            }
+            catch
+            {
+                MessageBox.Show("수식이 올바르지 않습니다.");
             }
         }
 
@@ -114,11 +83,11 @@ namespace SimpleCalculator
 
             if (string.IsNullOrEmpty(currentOperator))
             {
-                OutputBox.Text = "0";
+                OutputBox.Text = "";
             }
             else
             {
-                OutputBox.Text = $"{firstOperand} {currentOperator} 0";
+                OutputBox.Text = $"{firstOperand} {currentOperator} ";
             }
         }
 
@@ -126,7 +95,7 @@ namespace SimpleCalculator
         {
             firstOperand = 0;
             currentOperator = "";
-            InputBox.Text = "0";      // 화면을 0으로 초기화
+            InputBox.Text = "";
             OutputBox.Text = "";     // 수식창 비우기
             isNewInput = true;
         }
@@ -134,15 +103,15 @@ namespace SimpleCalculator
         private void Delete_Click(object sender, EventArgs e)
         {
             // 입력창에 글자가 있고, "0"이 아닐 때만 지우기 수행
-            if (InputBox.Text.Length > 0 && InputBox.Text != "0")
+            if (InputBox.Text.Length > 0 && InputBox.Text != "")
             {
                 // 마지막 한 글자를 제거
                 InputBox.Text = InputBox.Text.Substring(0, InputBox.Text.Length - 1);
 
-                // 만약 다 지워서 빈 칸이 되면 "0"으로 표시
+
                 if (InputBox.Text == "")
                 {
-                    InputBox.Text = "0";
+                    InputBox.Text = "";
                     isNewInput = true;
                 }
                 if (string.IsNullOrEmpty(currentOperator))
@@ -154,6 +123,72 @@ namespace SimpleCalculator
                     OutputBox.Text = $"{firstOperand} {currentOperator} {InputBox.Text}";
                 }
             }
+        }
+
+        private void Sign_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Dot_Click(object sender, EventArgs e)
+        {
+            if (isNewInput)
+            {
+                InputBox.Text = "0.";
+                isNewInput = false;
+            }
+            else
+            {
+                // 이미 소수점이 있다면 무시 (중복 방지)
+                if (!InputBox.Text.Contains("."))
+                {
+                    InputBox.Text += ".";
+                }
+            }
+
+            // 실시간 OutputBox 업데이트 (기존 로직 활용)
+            UpdateOutput();
+        }
+        private void UpdateOutput()
+        {
+            if (string.IsNullOrEmpty(currentOperator))
+            {
+                OutputBox.Text = InputBox.Text;
+            }
+            else
+            {
+                OutputBox.Text = $"{firstOperand} {currentOperator} {InputBox.Text}";
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Parentheses_Click(object sender, EventArgs e)
+        {
+            int openCount = InputBox.Text.Count(f => f == '(');
+            int closeCount = InputBox.Text.Count(f => f == ')');
+
+            if (openCount > closeCount && (char.IsDigit(InputBox.Text.Last()) || InputBox.Text.Last() == ')'))
+            {
+                InputBox.Text += ")";
+            }
+            else
+            {
+                if (InputBox.Text != "0" && (char.IsDigit(InputBox.Text.Last()) || InputBox.Text.Last() == ')'))
+                {
+                    InputBox.Text += " * (";
+                }
+                else
+                {
+                    if (InputBox.Text == "0") InputBox.Text = "(";
+                    else InputBox.Text += "(";
+                }
+            }
+            OutputBox.Text = InputBox.Text;
+            isNewInput = false;
         }
     }
 }
