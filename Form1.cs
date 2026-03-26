@@ -96,5 +96,21 @@ namespace SimpleCalculator
                 isNewInput = true;
             }
         }
+
+        private void ClearEntry_Click(object sender, EventArgs e)
+        {
+            InputBox.Text = "0";     // 현재 입력창만 0으로 바꿈
+            isNewInput = true;
+        }
+
+        private void Clear_Click(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void Delete_Click(object sender, EventArgs e)
+        {
+            
+        }
     }
 }

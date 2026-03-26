@@ -161,6 +161,7 @@
             ClearEntry.TabIndex = 10;
             ClearEntry.Text = "CE";
             ClearEntry.UseVisualStyleBackColor = true;
+            ClearEntry.Click += ClearEntry_Click;
             // 
             // Clear
             // 
@@ -170,6 +171,7 @@
             Clear.TabIndex = 11;
             Clear.Text = "C";
             Clear.UseVisualStyleBackColor = true;
+            Clear.Click += Clear_Click;
             // 
             // Delete
             // 
@@ -179,6 +181,7 @@
             Delete.TabIndex = 12;
             Delete.Text = "DEL";
             Delete.UseVisualStyleBackColor = true;
+            Delete.Click += Delete_Click;
             // 
             // Divide
             // 
