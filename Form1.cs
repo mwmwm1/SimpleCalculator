@@ -114,7 +114,19 @@ namespace SimpleCalculator
 
         private void Delete_Click(object sender, EventArgs e)
         {
-            
+            // 입력창에 글자가 있고, "0"이 아닐 때만 지우기 수행
+            if (InputBox.Text.Length > 0 && InputBox.Text != "0")
+            {
+                // 마지막 한 글자를 제거
+                InputBox.Text = InputBox.Text.Substring(0, InputBox.Text.Length - 1);
+
+                // 만약 다 지워서 빈 칸이 되면 "0"으로 표시
+                if (InputBox.Text == "")
+                {
+                    InputBox.Text = "0";
+                    isNewInput = true;
+                }
+            }
         }
     }
 }
