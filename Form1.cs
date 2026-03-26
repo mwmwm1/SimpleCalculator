@@ -25,6 +25,16 @@ namespace SimpleCalculator
                 {
                     InputBox.Text += btn.Text;
                 }
+
+                // 수정된 로직: 연산자가 없으면 숫자만, 있으면 수식 전체를 표시
+                if (string.IsNullOrEmpty(currentOperator))
+                {
+                    OutputBox.Text = InputBox.Text;
+                }
+                else
+                {
+                    OutputBox.Text = $"{firstOperand} {currentOperator} {InputBox.Text}";
+                }
             }
         }
 
@@ -101,6 +111,15 @@ namespace SimpleCalculator
         {
             InputBox.Text = "0";     // 현재 입력창만 0으로 바꿈
             isNewInput = true;
+
+            if (string.IsNullOrEmpty(currentOperator))
+            {
+                OutputBox.Text = "0";
+            }
+            else
+            {
+                OutputBox.Text = $"{firstOperand} {currentOperator} 0";
+            }
         }
 
         private void Clear_Click(object sender, EventArgs e)
@@ -125,6 +144,14 @@ namespace SimpleCalculator
                 {
                     InputBox.Text = "0";
                     isNewInput = true;
+                }
+                if (string.IsNullOrEmpty(currentOperator))
+                {
+                    OutputBox.Text = InputBox.Text;
+                }
+                else
+                {
+                    OutputBox.Text = $"{firstOperand} {currentOperator} {InputBox.Text}";
                 }
             }
         }

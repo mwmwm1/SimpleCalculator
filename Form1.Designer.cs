@@ -249,13 +249,16 @@
             // 
             // Equal
             // 
+            Equal.BackColor = SystemColors.ActiveCaption;
+            Equal.BackgroundImageLayout = ImageLayout.None;
             Equal.Font = new Font("맑은 고딕", 13F);
+            Equal.ForeColor = SystemColors.ControlText;
             Equal.Location = new Point(187, 325);
             Equal.Name = "Equal";
             Equal.Size = new Size(58, 40);
             Equal.TabIndex = 19;
             Equal.Text = "=";
-            Equal.UseVisualStyleBackColor = true;
+            Equal.UseVisualStyleBackColor = false;
             Equal.Click += Equal_Click;
             // 
             // OutputBox
